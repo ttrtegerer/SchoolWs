@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Birthday" Type="DateTime" Precision="0" />
+    <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="GenderCode" Type="String" MaxLength="1" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="PhotoPath" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Session_Gender" Relationship="Self.C12FK_Client_Gender" FromRole="Session_Client" ToRole="Session_Gender" />
+    <NavigationProperty Name="Session_ClientService" Relationship="Self.C12FK_ClientService_Client" FromRole="Session_Client" ToRole="Session_ClientService" />
+    <NavigationProperty Name="Session_Tag" Relationship="Self.Session_TagOfClient" FromRole="Session_Client" ToRole="Session_Tag" />
+  </EntityType>
+  <EntityType Name="ClientService">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClientID" Type="Int32" Nullable="false" />
+    <Property Name="ServiceID" Type="Int32" Nullable="false" />
+    <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Session_Client" Relationship="Self.C12FK_ClientService_Client" FromRole="Session_ClientService" ToRole="Session_Client" />
+    <NavigationProperty Name="Session_DocumentByService" Relationship="Self.C12FK_DocumentByService_ClientService" FromRole="Session_ClientService" ToRole="Session_DocumentByService" />
+    <NavigationProperty Name="Session_ProductSale" Relationship="Self.C12FK_ProductSale_ClientService" FromRole="Session_ClientService" ToRole="Session_ProductSale" />
+    <NavigationProperty Name="Session_Service" Relationship="DbModel.C12FK_ClientService_Service" FromRole="ClientService" ToRole="Session_Service" />
+  </EntityType>
+  <EntityType Name="DocumentByService">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClientServiceID" Type="Int32" Nullable="false" />
+    <Property Name="DocumentPath" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Session_ClientService" Relationship="Self.C12FK_DocumentByService_ClientService" FromRole="Session_DocumentByService" ToRole="Session_ClientService" />
+  </EntityType>
+  <EntityType Name="Gender">
+    <Key>
+      <PropertyRef Name="Code" />
+    </Key>
+    <Property Name="Code" Type="String" MaxLength="1" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Session_Client" Relationship="Self.C12FK_Client_Gender" FromRole="Session_Gender" ToRole="Session_Client" />
+  </EntityType>
+  <EntityType Name="Manufacturer">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Session_Product" Relationship="Self.C12FK_Product_Manufacturer" FromRole="Session_Manufacturer" ToRole="Session_Product" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MainImagePath" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="ManufacturerID" Type="Int32" />
+    <NavigationProperty Name="Session_Manufacturer" Relationship="Self.C12FK_Product_Manufacturer" FromRole="Session_Product" ToRole="Session_Manufacturer" />
+    <NavigationProperty Name="Session_ProductPhoto" Relationship="Self.C12FK_ProductPhoto_Product" FromRole="Session_Product" ToRole="Session_ProductPhoto" />
+    <NavigationProperty Name="Session_ProductSale" Relationship="Self.C12FK_ProductSale_Product" FromRole="Session_Product" ToRole="Session_ProductSale" />
+    <NavigationProperty Name="Session_Product1" Relationship="Self.Session_AttachedProduct" FromRole="Session_Product" ToRole="Session_Product1" />
+    <NavigationProperty Name="Session_Product2" Relationship="Self.Session_AttachedProduct" FromRole="Session_Product1" ToRole="Session_Product" />
+  </EntityType>
+  <EntityType Name="ProductPhoto">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="PhotoPath" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Session_Product" Relationship="Self.C12FK_ProductPhoto_Product" FromRole="Session_ProductPhoto" ToRole="Session_Product" />
+  </EntityType>
+  <EntityType Name="ProductSale">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SaleDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="ClientServiceID" Type="Int32" />
+    <NavigationProperty Name="Session_ClientService" Relationship="Self.C12FK_ProductSale_ClientService" FromRole="Session_ProductSale" ToRole="Session_ClientService" />
+    <NavigationProperty Name="Session_Product" Relationship="Self.C12FK_ProductSale_Product" FromRole="Session_ProductSale" ToRole="Session_Product" />
+  </EntityType>
+  <EntityType Name="ServicePhoto">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ServiceID" Type="Int32" Nullable="false" />
+    <Property Name="PhotoPath" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Session_Service" Relationship="DbModel.C12FK_ServicePhoto_Service" FromRole="ServicePhoto" ToRole="Session_Service" />
+  </EntityType>
+  <EntityType Name="Tag">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Color" Type="String" MaxLength="6" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Session_Client" Relationship="Self.Session_TagOfClient" FromRole="Session_Tag" ToRole="Session_Client" />
+  </EntityType>
+  <Association Name="C12FK_Client_Gender">
+    <End Role="Session_Gender" Type="DbModel.Gender" Multiplicity="1" />
+    <End Role="Session_Client" Type="DbModel.Client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Session_Gender">
+        <PropertyRef Name="Code" />
+      </Principal>
+      <Dependent Role="Session_Client">
+        <PropertyRef Name="GenderCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="C12FK_ClientService_Client">
+    <End Role="Session_Client" Type="DbModel.Client" Multiplicity="1" />
+    <End Role="Session_ClientService" Type="DbModel.ClientService" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Session_Client">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Session_ClientService">
+        <PropertyRef Name="ClientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="C12FK_DocumentByService_ClientService">
+    <End Role="Session_ClientService" Type="DbModel.ClientService" Multiplicity="1" />
+    <End Role="Session_DocumentByService" Type="DbModel.DocumentByService" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Session_ClientService">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Session_DocumentByService">
+        <PropertyRef Name="ClientServiceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="C12FK_ProductSale_ClientService">
+    <End Role="Session_ClientService" Type="DbModel.ClientService" Multiplicity="0..1" />
+    <End Role="Session_ProductSale" Type="DbModel.ProductSale" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Session_ClientService">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Session_ProductSale">
+        <PropertyRef Name="ClientServiceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="C12FK_Product_Manufacturer">
+    <End Role="Session_Manufacturer" Type="DbModel.Manufacturer" Multiplicity="0..1" />
+    <End Role="Session_Product" Type="DbModel.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Session_Manufacturer">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Session_Product">
+        <PropertyRef Name="ManufacturerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="C12FK_ProductPhoto_Product">
+    <End Role="Session_Product" Type="DbModel.Product" Multiplicity="1" />
+    <End Role="Session_ProductPhoto" Type="DbModel.ProductPhoto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Session_Product">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Session_ProductPhoto">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="C12FK_ProductSale_Product">
+    <End Role="Session_Product" Type="DbModel.Product" Multiplicity="1" />
+    <End Role="Session_ProductSale" Type="DbModel.ProductSale" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Session_Product">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Session_ProductSale">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Session_AttachedProduct">
+    <End Role="Session_Product" Type="DbModel.Product" Multiplicity="*" />
+    <End Role="Session_Product1" Type="DbModel.Product" Multiplicity="*" />
+  </Association>
+  <Association Name="Session_TagOfClient">
+    <End Role="Session_Client" Type="DbModel.Client" Multiplicity="*" />
+    <End Role="Session_Tag" Type="DbModel.Tag" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="DbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Session_Client" EntityType="DbModel.Client" />
+    <EntitySet Name="Session_ClientService" EntityType="DbModel.ClientService" />
+    <EntitySet Name="Session_DocumentByService" EntityType="DbModel.DocumentByService" />
+    <EntitySet Name="Session_Gender" EntityType="DbModel.Gender" />
+    <EntitySet Name="Session_Manufacturer" EntityType="DbModel.Manufacturer" />
+    <EntitySet Name="Session_Product" EntityType="DbModel.Product" />
+    <EntitySet Name="Session_ProductPhoto" EntityType="DbModel.ProductPhoto" />
+    <EntitySet Name="Session_ProductSale" EntityType="DbModel.ProductSale" />
+    <EntitySet Name="Session_ServicePhoto" EntityType="DbModel.ServicePhoto" />
+    <EntitySet Name="Session_Tag" EntityType="DbModel.Tag" />
+    <AssociationSet Name="C12FK_Client_Gender" Association="Self.C12FK_Client_Gender">
+      <End Role="Session_Gender" EntitySet="Session_Gender" />
+      <End Role="Session_Client" EntitySet="Session_Client" />
+    </AssociationSet>
+    <AssociationSet Name="C12FK_ClientService_Client" Association="Self.C12FK_ClientService_Client">
+      <End Role="Session_Client" EntitySet="Session_Client" />
+      <End Role="Session_ClientService" EntitySet="Session_ClientService" />
+    </AssociationSet>
+    <AssociationSet Name="C12FK_DocumentByService_ClientService" Association="Self.C12FK_DocumentByService_ClientService">
+      <End Role="Session_ClientService" EntitySet="Session_ClientService" />
+      <End Role="Session_DocumentByService" EntitySet="Session_DocumentByService" />
+    </AssociationSet>
+    <AssociationSet Name="C12FK_ProductSale_ClientService" Association="Self.C12FK_ProductSale_ClientService">
+      <End Role="Session_ClientService" EntitySet="Session_ClientService" />
+      <End Role="Session_ProductSale" EntitySet="Session_ProductSale" />
+    </AssociationSet>
+    <AssociationSet Name="C12FK_Product_Manufacturer" Association="Self.C12FK_Product_Manufacturer">
+      <End Role="Session_Manufacturer" EntitySet="Session_Manufacturer" />
+      <End Role="Session_Product" EntitySet="Session_Product" />
+    </AssociationSet>
+    <AssociationSet Name="C12FK_ProductPhoto_Product" Association="Self.C12FK_ProductPhoto_Product">
+      <End Role="Session_Product" EntitySet="Session_Product" />
+      <End Role="Session_ProductPhoto" EntitySet="Session_ProductPhoto" />
+    </AssociationSet>
+    <AssociationSet Name="C12FK_ProductSale_Product" Association="Self.C12FK_ProductSale_Product">
+      <End Role="Session_Product" EntitySet="Session_Product" />
+      <End Role="Session_ProductSale" EntitySet="Session_ProductSale" />
+    </AssociationSet>
+    <AssociationSet Name="Session_AttachedProduct" Association="Self.Session_AttachedProduct">
+      <End Role="Session_Product" EntitySet="Session_Product" />
+      <End Role="Session_Product1" EntitySet="Session_Product" />
+    </AssociationSet>
+    <AssociationSet Name="Session_TagOfClient" Association="Self.Session_TagOfClient">
+      <End Role="Session_Client" EntitySet="Session_Client" />
+      <End Role="Session_Tag" EntitySet="Session_Tag" />
+    </AssociationSet>
+    <EntitySet Name="Session_Service" EntityType="DbModel.Service" />
+    <AssociationSet Name="C12FK_ClientService_Service" Association="DbModel.C12FK_ClientService_Service">
+      <End Role="Session_Service" EntitySet="Session_Service" />
+      <End Role="ClientService" EntitySet="Session_ClientService" />
+    </AssociationSet>
+    <AssociationSet Name="C12FK_ServicePhoto_Service" Association="DbModel.C12FK_ServicePhoto_Service">
+      <End Role="Session_Service" EntitySet="Session_Service" />
+      <End Role="ServicePhoto" EntitySet="Session_ServicePhoto" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Cost" Type="Int32" Nullable="false" />
+    <Property Name="DurationInSeconds" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Discount" Type="Double" />
+    <Property Name="MainImagePath" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Session_ClientService" Relationship="DbModel.C12FK_ClientService_Service" FromRole="Session_Service" ToRole="ClientService" />
+    <NavigationProperty Name="Session_ServicePhoto" Relationship="DbModel.C12FK_ServicePhoto_Service" FromRole="Session_Service" ToRole="ServicePhoto" />
+  </EntityType>
+  <Association Name="C12FK_ClientService_Service">
+    <End Type="DbModel.Service" Role="Session_Service" Multiplicity="1" />
+    <End Type="DbModel.ClientService" Role="ClientService" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Session_Service">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ClientService">
+        <PropertyRef Name="ServiceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="C12FK_ServicePhoto_Service">
+    <End Type="DbModel.Service" Role="Session_Service" Multiplicity="1" />
+    <End Type="DbModel.ServicePhoto" Role="ServicePhoto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Session_Service">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ServicePhoto">
+        <PropertyRef Name="ServiceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

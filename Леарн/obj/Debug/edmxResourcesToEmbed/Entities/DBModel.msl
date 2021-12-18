@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище DbModelContainer" CdmEntityContainer="DbEntities">
+    <EntitySetMapping Name="Session_Client">
+      <EntityTypeMapping TypeName="DbModel.Client">
+        <MappingFragment StoreEntitySet="Session-Client">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+          <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+          <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="GenderCode" ColumnName="GenderCode" />
+          <ScalarProperty Name="PhotoPath" ColumnName="PhotoPath" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Session_ClientService">
+      <EntityTypeMapping TypeName="DbModel.ClientService">
+        <MappingFragment StoreEntitySet="Session-ClientService">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+          <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Session_DocumentByService">
+      <EntityTypeMapping TypeName="DbModel.DocumentByService">
+        <MappingFragment StoreEntitySet="Session-DocumentByService">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ClientServiceID" ColumnName="ClientServiceID" />
+          <ScalarProperty Name="DocumentPath" ColumnName="DocumentPath" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Session_Gender">
+      <EntityTypeMapping TypeName="DbModel.Gender">
+        <MappingFragment StoreEntitySet="Session-Gender">
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Session_Manufacturer">
+      <EntityTypeMapping TypeName="DbModel.Manufacturer">
+        <MappingFragment StoreEntitySet="Session-Manufacturer">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Session_Product">
+      <EntityTypeMapping TypeName="DbModel.Product">
+        <MappingFragment StoreEntitySet="Session-Product">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="MainImagePath" ColumnName="MainImagePath" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ManufacturerID" ColumnName="ManufacturerID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Session_ProductPhoto">
+      <EntityTypeMapping TypeName="DbModel.ProductPhoto">
+        <MappingFragment StoreEntitySet="Session-ProductPhoto">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="PhotoPath" ColumnName="PhotoPath" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Session_ProductSale">
+      <EntityTypeMapping TypeName="DbModel.ProductSale">
+        <MappingFragment StoreEntitySet="Session-ProductSale">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="ClientServiceID" ColumnName="ClientServiceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Session_ServicePhoto">
+      <EntityTypeMapping TypeName="DbModel.ServicePhoto">
+        <MappingFragment StoreEntitySet="Session-ServicePhoto">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+          <ScalarProperty Name="PhotoPath" ColumnName="PhotoPath" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Session_Tag">
+      <EntityTypeMapping TypeName="DbModel.Tag">
+        <MappingFragment StoreEntitySet="Session-Tag">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="Session_AttachedProduct" TypeName="DbModel.Session_AttachedProduct" StoreEntitySet="Session-AttachedProduct">
+      <EndProperty Name="Session_Product">
+        <ScalarProperty Name="ID" ColumnName="MainProductID" />
+      </EndProperty>
+      <EndProperty Name="Session_Product1">
+        <ScalarProperty Name="ID" ColumnName="AttachedProductID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="Session_TagOfClient" TypeName="DbModel.Session_TagOfClient" StoreEntitySet="Session-TagOfClient">
+      <EndProperty Name="Session_Client">
+        <ScalarProperty Name="ID" ColumnName="ClientID" />
+      </EndProperty>
+      <EndProperty Name="Session_Tag">
+        <ScalarProperty Name="ID" ColumnName="TagID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="Session_Service">
+      <EntityTypeMapping TypeName="DbModel.Service">
+        <MappingFragment StoreEntitySet="Session-Service">
+          <ScalarProperty Name="MainImagePath" ColumnName="MainImagePath" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DurationInSeconds" ColumnName="DurationInSeconds" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
